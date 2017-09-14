@@ -22,7 +22,7 @@ docker-build:
 
 clean: check-docker
 	docker rmi $(IMAGE)
-	
+
 test: test-style
 
 test-style:
@@ -31,11 +31,7 @@ test-style:
 .PHONY: build push docker-build clean upgrade deploy test test-style
 
 build-all:
-	docker build ${DOCKER_BUILD_FLAGS} -t ${DEIS_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION} ../grafana/rootfs
-	docker build ${DOCKER_BUILD_FLAGS} -t ${DEIS_REGISTRY}${IMAGE_PREFIX}/influxdb:${VERSION} ../influxdb/rootfs
 	docker build ${DOCKER_BUILD_FLAGS} -t ${DEIS_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
 
 push-all:
-	docker push ${DEIS_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION}
-	docker push ${DEIS_REGISTRY}${IMAGE_PREFIX}/influxdb:${VERSION}
 	docker push ${DEIS_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION}

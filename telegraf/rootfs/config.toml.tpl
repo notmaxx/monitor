@@ -81,7 +81,6 @@
 [[outputs.librato]]
   api_user = {{ .LIBRATO_API_USER | quote }}
   api_token = {{ .LIBRATO_API_TOKEN | quote }}
-  source_tag = {{ .LIBRATO_SOURCE_TAG | quote }}
 {{ end }}
 
 {{ if .NSQ_SERVER }}
@@ -101,6 +100,14 @@
 [[outputs.riemann]]
   url = {{ .RIEMANN_URL | quote }}
   transport = {{ .RIEMANN_TRANSPORT | quote }}
+{{ end }}
+
+{{ if .AWS_CLOUDWATCH_ENABLE }}
+[[outputs.cloudwatch]]
+  region = {{ .AWS_CLOUDWATCH_REGION | quote }}
+  namespace = {{ .AWS_CLOUDWATCH_NAMESPACE | quote }}
+  access_key = {{ .AWS_CLOUDWATCH_ACCESS_KEY | quote }}
+  secret_key = {{ .AWS_CLOUDWATCH_SECRET_KEY | quote }}
 {{ end }}
 
 # Set Input Configuration
