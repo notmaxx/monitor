@@ -43,6 +43,5 @@ There are a few key environment variables you should be aware of when interactin
 
 * `make build` - Build docker image
 * `make push` - Push docker image to a registry
-* `make upgrade` - Replaces the running grafana instance with a new one
 
-The typical workflow will look something like this - `DEIS_REGISTRY=quay.io/ IMAGE_PREFIX=foouser make build push upgrade``
+The typical workflow will look something like this - `DEIS_REGISTRY=quay.io/ IMAGE_PREFIX=foouser make build push``
