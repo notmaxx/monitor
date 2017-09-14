@@ -1,5 +1,4 @@
 # [Telegraf](https://influxdata.com/time-series-platform/telegraf/)
-[![Docker Repository on Quay](https://quay.io/repository/deisci/telegraf/status "Docker Repository on Quay")](https://quay.io/repository/deisci/telegraf)
 
 ## Description
 Telegraf is a metrics collection daemon from InfluxData. It contains numerous input and output plugins that allows the user to customize what data they collect and where it is sent. This image is based on the official [deis base image](https://github.com/deis/docker-base).
@@ -29,19 +28,20 @@ You must do 2 things if you want to receive host level metrics from telegraf.
 
 
 ## Development
-The provided `Makefile` has various targets to help support building and publishing new images into a kubernetes cluster.
+The provided `Makefile` has various targets to help support building and publishing new images to registry.
 
 ### Environment variables
 There are a few key environment variables you should be aware of when interacting with the `make` targets.
 
 * `BUILD_TAG` - The tag provided to the docker image when it is built (defaults to the git-sha)
 * `SHORT_NAME` - The name of the image (defaults to `grafana`)
-* `DEIS_REGISTRY` - This is the registry you are using (default `dockerhub`)
+* `DEV_REGISTRY` - This is the registry you are using (default `dockerhub`)
 * `IMAGE_PREFIX` - This is the account for the registry you are using (default `deis`)
 
 ### Make targets
 
+* for ECR - do `docker login`. There should be repository in place `workato/deis/telegraf`
 * `make build` - Build docker image
 * `make push` - Push docker image to a registry
 
-The typical workflow will look something like this - `DEIS_REGISTRY=quay.io/ IMAGE_PREFIX=foouser make build push``
+The typical workflow will look something like this - `DEV_REGISTRY=XYZABC.dkr.ecr.us-east-1.amazonaws.com/ IMAGE_PREFIX=deis make build push`.
