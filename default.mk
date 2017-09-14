@@ -1,37 +1,27 @@
 SHELL := /bin/bash
 
 # all monitor components share/use the following targets/exports
-DOCKER_HOST = $(shell echo $$DOCKER_HOST)
 BUILD_TAG ?= git-$(shell git rev-parse --short HEAD)
-DEIS_REGISTRY ?= ${DEV_REGISTRY}
 IMAGE_PREFIX ?= deis
 
-include ../includes.mk
-include ../versioning.mk
-include ../deploy.mk
-
-TEST_ENV_PREFIX := docker run --rm -v ${CURDIR}:/bash -w /bash quay.io/deis/shell-dev
+include ./includes.mk
+include ./versioning.mk
 
 build: docker-build
 push: docker-push
 deploy: check-kubectl docker-build docker-push install
 
 docker-build:
-	docker build ${DOCKER_BUILD_FLAGS} -t ${IMAGE} rootfs
+	docker build ${DOCKER_BUILD_FLAGS} -t ${IMAGE} ./telegraf/rootfs
 	docker tag ${IMAGE} ${MUTABLE_IMAGE}
 
 clean: check-docker
 	docker rmi $(IMAGE)
 
-test: test-style
-
-test-style:
-	${TEST_ENV_PREFIX} shellcheck $(SHELL_SCRIPTS)
-
-.PHONY: build push docker-build clean upgrade deploy test test-style
+.PHONY: build push docker-build clean
 
 build-all:
-	docker build ${DOCKER_BUILD_FLAGS} -t ${DEIS_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
+	docker build ${DOCKER_BUILD_FLAGS} -t ${DEV_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION} ./telegraf/rootfs
 
 push-all:
-	docker push ${DEIS_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION}
+	docker push ${DEV_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION}
