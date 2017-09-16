@@ -12,7 +12,7 @@ You must do 2 things if you want to receive host level metrics from telegraf.
  * - Set the environment variables `HOST_PROC` and `HOST_SYS` to the values of where `/sys` and `/proc` are mounted in the container. Example entries can be found in the [daemonset manifest](https://github.com/deis/monitor/blob/master/charts/monitor/charts/telegraf/templates/monitor-telegraf-daemon.yaml).
 
  ## Environment Variables
- The configuration is driven via environment variables which are published to the `config.toml` file passed to telegraf when it starts. The following table gives the environment variable name and the default value if it is not set.
+ The configuration is driven via environment variables which are published to the `config-*.toml` file passed to telegraf when it starts. The following table gives the environment variable name and the default value if it is not set.
 
  | Name | Default | Description |
  |-----------|---------------|---------------|

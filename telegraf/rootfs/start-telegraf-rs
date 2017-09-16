@@ -11,20 +11,15 @@ NODE_IP="$(curl -s "$API_URL/api/v1/namespaces/$POD_NAMESPACE/pods/$HOSTNAME" --
 echo "Node IP set (${NODE_IP})"
 AGENT_HOSTNAME=$NODE_NAME
 
-if [ -n "$ENABLE_KUBERNETES" ]; then
-  export KUBERNETES_BEARER_TOKEN_PATH=${BEARER_TOKEN_PATH}
-  export KUBERNETES_URL="http://${NODE_IP}:10255"
-  echo "Setting KUBERNETES_URL: $KUBERNETES_URL"
-fi
-
-
-echo "Building config.toml!"
-envtpl -in config.toml.tpl | sed  '/^$/d' > config.toml
+echo "Building config-rs.toml!"
+envtpl -in config-rs.toml.tpl | sed  '/^$/d' > config-rs.toml
 
 echo "Finished building toml..."
 echo "###########################################"
 echo "###########################################"
-cat config.toml
+cat config-rs.toml
 echo "###########################################"
 echo "###########################################"
-telegraf -config config.toml -quiet
+
+telegraf -config config-rs.toml -quiet
+

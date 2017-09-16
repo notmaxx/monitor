@@ -12,4 +12,4 @@ RUN mkdir -p /usr/local/bin/ \
   && curl -fsSL -o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 \
   && chmod +x /usr/bin/jq
 
-CMD ["/start-telegraf"]
+CMD ["/start-telegraf-ds"]
