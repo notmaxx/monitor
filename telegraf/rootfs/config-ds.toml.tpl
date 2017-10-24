@@ -71,9 +71,10 @@
   name_prefix = {{ .KUBERNETES_ENV_PREFIX | quote }}
   # drop most of information to reduce traffic
   {{ if .KUBERNETES_LITE_MODE_ENABLED }}
-  {{ $var_full_name_pass := printf "%s%s" .KUBERNETES_ENV_PREFIX "kubernetes_pod_container" }}
-  namepass = [ {{ $var_full_name_pass | quote }} ]
-  fieldpass = [ "cpu_usage_nanocores", "memory_usage_bytes" ]
+  {{ $var_full_name_container_pass := printf "%s%s" .KUBERNETES_ENV_PREFIX "kubernetes_pod_container" }}
+  {{ $var_full_name_network_pass := printf "%s%s" .KUBERNETES_ENV_PREFIX "kubernetes_pod_network" }}
+  namepass = [ {{ $var_full_name_container_pass | quote }}, {{ $var_full_name_network_pass | quote }} ]
+  fieldpass = [ "cpu_usage_nanocores", "memory_usage_bytes", "rx_bytes", "tx_bytes" ]
   {{ end }}
 {{ end }}
 
